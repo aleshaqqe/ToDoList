@@ -132,4 +132,22 @@ button {
   height: 30px;
 }
 
+.task {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.task.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.task.hide {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
 /*# sourceMappingURL=style.css.map */

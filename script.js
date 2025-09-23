@@ -31,6 +31,9 @@ function render() {
 
     li.appendChild(action);
     taskList.appendChild(li);
+    requestAnimationFrame(() => {
+      li.classList.add('show');
+    });
   });
 }
 
@@ -45,8 +48,14 @@ function addTask() {
 }
 
 function remove(index) {
-  tasks.splice(index, 1);
-  render();
+  const taskList = document.querySelector('.todolist__list');
+  const li = taskList.children[index];
+  li.classList.add('hide');
+
+  li.addEventListener('transitionend', () => {
+    tasks.splice(index, 1);
+    render();
+  }, { once: true });
 }
 
 function priorityTask(index) {
