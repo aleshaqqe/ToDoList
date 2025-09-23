@@ -39,6 +39,7 @@ function render() {
 
 function addTask() {
   const input = document.querySelector('.todolist__input');
+
   const task = input.value.trim();
   if (task) {
     tasks.push(task);
@@ -63,6 +64,12 @@ function priorityTask(index) {
   tasks.unshift(item);
   render();
 }
+const input = document.querySelector('.todolist__input');
 
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    addTask();
+  }
+});
 document.querySelector('.btn').addEventListener('click', addTask);
 render();
