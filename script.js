@@ -11,7 +11,7 @@ function render() {
     // текст задачи
     const span = document.createElement('span');
     span.textContent = task;
-
+    span.className='task__item';
     // контейнер для кнопок
     const action = document.createElement('div');
     action.className = 'actions';
