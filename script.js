@@ -6,9 +6,13 @@ function render() {
 
   tasks.forEach((task, index) => {
     const li = document.createElement('li');
-    li.textContent = task;
     li.className = 'task';
 
+    // текст задачи
+    const span = document.createElement('span');
+    span.textContent = task;
+
+    // контейнер для кнопок
     const action = document.createElement('div');
     action.className = 'actions';
 
@@ -26,15 +30,50 @@ function render() {
       remove(index);
     });
 
+    const redactBtn = document.createElement('button');
+    redactBtn.className = 'redactBtn btn2 btn3';
+    redactBtn.textContent = 'Змінити';
+    redactBtn.addEventListener('click', () => {
+      editTask(index, li, span, redactBtn);
+    });
+
     action.appendChild(priority);
     action.appendChild(removeBtn);
+    action.appendChild(redactBtn);
 
+    li.appendChild(span);
     li.appendChild(action);
     taskList.appendChild(li);
+
     requestAnimationFrame(() => {
       li.classList.add('show');
     });
   });
+}
+
+function editTask(index, li, span, button) {
+  const editInput = document.createElement('input');
+  editInput.type = 'text';
+  editInput.value = tasks[index];
+
+  li.replaceChild(editInput, span); // заменяем span на input
+
+  button.textContent = 'Зберегти';
+
+  button.onclick = () => {
+    tasks[index] = editInput.value.trim() || tasks[index];
+    render();
+  };
+
+  // возможность сохранить по Enter
+  editInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      tasks[index] = editInput.value.trim() || tasks[index];
+      render();
+    }
+  });
+
+  editInput.focus();
 }
 
 function addTask() {
@@ -53,10 +92,14 @@ function remove(index) {
   const li = taskList.children[index];
   li.classList.add('hide');
 
-  li.addEventListener('transitionend', () => {
-    tasks.splice(index, 1);
-    render();
-  }, { once: true });
+  li.addEventListener(
+    'transitionend',
+    () => {
+      tasks.splice(index, 1);
+      render();
+    },
+    { once: true }
+  );
 }
 
 function priorityTask(index) {
@@ -64,6 +107,7 @@ function priorityTask(index) {
   tasks.unshift(item);
   render();
 }
+
 const input = document.querySelector('.todolist__input');
 
 input.addEventListener('keydown', (event) => {
@@ -72,4 +116,5 @@ input.addEventListener('keydown', (event) => {
   }
 });
 document.querySelector('.btn').addEventListener('click', addTask);
+
 render();
