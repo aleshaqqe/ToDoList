@@ -80,8 +80,6 @@ select {
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
 }
 
 body {
@@ -91,14 +89,17 @@ body {
 .header__title {
   margin-top: 40px;
   font-size: 70px;
+  text-align: center;
 }
 
 section {
+  text-align: center;
   margin-top: 20px;
 }
 section input {
   border: 2px solid #e5e7eb;
   border-radius: 10px;
+  text-align: center;
 }
 section .btn {
   margin-left: 20px;
@@ -158,6 +159,12 @@ button {
 
 .task__item {
   font-size: 20px;
+}
+
+.task__item.completed {
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: line-through;
 }
 
 /*# sourceMappingURL=style.css.map */

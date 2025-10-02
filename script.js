@@ -1,5 +1,6 @@
 const tasks = [];
 
+
 function render() {
   const taskList = document.querySelector('.todolist__list');
   taskList.innerHTML = '';
@@ -29,6 +30,13 @@ function render() {
     removeBtn.addEventListener('click', () => {
       remove(index);
     });
+    const done = document.createElement('button');
+    done.className = 'btn2 btn4';
+    done.cssText='margin-left:20px;'
+    done.textContent = 'Done';
+    done.addEventListener('click', () => {
+      completedTask(index);
+    })
 
     const redactBtn = document.createElement('button');
     redactBtn.className = 'redactBtn btn2 btn3';
@@ -40,7 +48,7 @@ function render() {
     action.appendChild(priority);
     action.appendChild(removeBtn);
     action.appendChild(redactBtn);
-
+    action.appendChild(done);
     li.appendChild(span);
     li.appendChild(action);
     taskList.appendChild(li);
@@ -116,5 +124,23 @@ input.addEventListener('keydown', (event) => {
   }
 });
 document.querySelector('.btn').addEventListener('click', addTask);
+
+function completedTask(index) {
+  const item = tasks[index];
+
+  const li = document.createElement('li');
+  li.className = 'task show';
+
+  const span = document.createElement('span');
+  span.textContent = item;
+  span.className = 'task__item completed task show';
+  li.appendChild(span);
+
+  const ul = document.querySelector('.completed__tasks');
+  ul.appendChild(li);
+
+  tasks.splice(index, 1);
+  render();
+}
 
 render();
